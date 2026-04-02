@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARTEVA | The Silent Atelier</title>
+  <!-- Google Fonts: Elegant Serif + Modern Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #fefcf8;
+      --surface: #ffffff;
+      --surface-elevated: #f6f2ec;
+      --text: #1f1b17;
+      --text-soft: #5e554b;
+      --text-muted: #a39589;
+      --accent: #b87c4f;
+      --accent-glow: #cf9a6e;
+      --accent-deep: #8e5c38;
+      --border-light: #e9e2d9;
+      --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.02);
+      --transition: 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #12100e;
+      --surface: #1d1a17;
+      --surface-elevated: #28231f;
+      --text: #efe6de;
+      --text-soft: #cfc1b5;
+      --text-muted: #9e8d7e;
+      --accent: #e2a06e;
+      --accent-glow: #efb889;
+      --accent-deep: #c27e4a;
+      --border-light: #332c26;
+      --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--surface-elevated); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 20px; }
+
+    /* header glass */
+    .glass-header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(var(--bg-rgb), 0.78);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-light);
+      transition: var(--transition);
+    }
+    [data-theme="light"] { --bg-rgb: 254, 252, 248; }
+    [data-theme="dark"] { --bg-rgb: 18, 16, 14; }
+
+    .nav-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1.2rem 2.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      background: linear-gradient(130deg, var(--accent), var(--accent-deep));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+    .nav-links a {
+      position: relative;
+      color: var(--text);
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--accent);
+      transition: 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    .utility-actions {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+    }
+    #themeToggle {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .bag-icon {
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* HERO - fresh direction */
+    .hero-arteva {
+      min-height: 95vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071&auto=format&fit=crop');
+      background-size: cover;
+      background-position: 25% 35%;
+      margin-top: 0;
+    }
+    .hero-arteva::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(0,0,0,0.55) 20%, rgba(0,0,0,0.2) 80%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      padding: 0 8%;
+      color: #fff;
+    }
+    .hero-sub {
+      font-size: 0.7rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: #f2d5b5;
+    }
+    .hero-main-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.2rem, 7vw, 5.8rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 1.4rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .hero-offer {
+      font-size: 1rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--accent-glow);
+      padding-left: 1rem;
+      background: rgba(0,0,0,0.25);
+      display: inline-block;
+      backdrop-filter: blur(3px);
+    }
+    .hero-offer strong { font-weight: 700; color: #ffdfb8; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 1rem 2.8rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: var(--accent-deep);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    }
+
+    .collection-badge {
+      max-width: 1440px;
+      margin: 5rem auto 1rem auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1.5rem;
+    }
+    .collection-badge h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+    }
+
+    .grid-shop {
+      max-width: 1440px;
+      margin: 2rem auto 6rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 2.5rem 1.8rem;
+    }
+
+    .product-tile {
+      background: var(--surface);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .product-tile:hover { transform: translateY(-8px); box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08); }
+    .tile-img {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: var(--surface-elevated);
+    }
+    .tile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .product-tile:hover .tile-img img { transform: scale(1.05); }
+    .quick-add {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      padding: 1rem;
+      opacity: 0;
+      transition: 0.3s;
+      text-align: center;
+    }
+    .product-tile:hover .quick-add { opacity: 1; }
+    .quick-add button {
+      background: white;
+      border: none;
+      width: 85%;
+      padding: 0.7rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border-radius: 40px;
+      transition: 0.2s;
+    }
+    .quick-add button:hover {
+      background: var(--accent);
+      color: white;
+    }
+    .product-info {
+      padding: 1.2rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product-details h4 {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+    .product-details h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+    .price-block { text-align: right; }
+    .current-price { font-weight: 700; font-size: 1rem; }
+    .old-price { font-size: 0.7rem; text-decoration: line-through; color: var(--text-muted); margin-left: 0.3rem; }
+
+    footer {
+      background: var(--surface-elevated);
+      margin-top: 3rem;
+      padding: 5rem 2rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      background: linear-gradient(120deg, var(--accent), var(--accent-deep));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .footer-locations {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      margin: 1rem 0 2.5rem;
+    }
+
+    @media (max-width: 750px) {
+      .nav-container { flex-direction: column; align-items: center; }
+      .nav-links { gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+      .grid-shop { gap: 1.5rem; }
+    }
+
+    /* POPUP - Minimalist / Earthy redesign */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      transition: opacity 0.25s ease;
+    }
+    .arteva-modal {
+      background: var(--surface);
+      border-radius: 32px;
+      max-width: 500px;
+      width: 100%;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 35px 55px -20px rgba(0,0,0,0.4);
+      padding: 2rem 2rem 2.2rem;
+      position: relative;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .arteva-modal { padding: 2.5rem; }
+    }
+    .modal-close-icon {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: 0.2s;
+    }
+    .modal-close-icon:hover { color: var(--accent); }
+    .modal-icon-badge {
+      width: 70px;
+      height: 70px;
+      background: rgba(184, 124, 79, 0.1);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 2.2rem;
+      border: 1px solid var(--accent);
+    }
+    .modal-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      font-weight: 400;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .modal-description {
+      color: var(--text-soft);
+      line-height: 1.5;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+    .modal-feature-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+    .feature-pill {
+      background: var(--surface-elevated);
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+    .modal-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.8rem;
+    }
+    .btn-modal-primary {
+      background: var(--accent);
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: white;
+    }
+    .btn-modal-primary:hover {
+      background: var(--accent-deep);
+      transform: scale(1.02);
+    }
+    .btn-modal-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      padding: 0.85rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.2s;
+    }
+    .btn-modal-secondary:hover {
+      background: rgba(184, 124, 79, 0.1);
+    }
+    .modal-fade-out { opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  </style>
+</head>
+<body>
+
+<!-- REDESIGNED POPUP - ARTEVA EARTHY MINIMAL -->
+<div id="entryModal" class="modal-overlay">
+  <div class="arteva-modal">
+    <button id="closeModalBtn" class="modal-close-icon" aria-label="close">✕</button>
+    <div class="modal-icon-badge">🍂</div>
+    <h2 class="modal-title">ARTEVA</h2>
+    <p class="modal-description">The Silent Atelier — where texture speaks louder than noise. enter a world of natural fibers, sculptural cuts, and timeless craft.</p>
+    <div class="modal-feature-row">
+      <span class="feature-pill">✧ botanical dyes</span>
+      <span class="feature-pill">✧ hand-finished</span>
+      <span class="feature-pill">✧ zero-waste</span>
+    </div>
+    <div class="modal-buttons">
+      <button id="enterBtn" class="btn-modal-primary">enter arteva</button>
+      <button id="laterBtn" class="btn-modal-secondary">explore later</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const modalDiv = document.getElementById('entryModal');
+    const enter = document.getElementById('enterBtn');
+    const later = document.getElementById('laterBtn');
+    const closeX = document.getElementById('closeModalBtn');
+    if (!modalDiv) return;
+    function vanishModal() {
+      modalDiv.classList.add('modal-fade-out');
+      setTimeout(() => { modalDiv.style.display = 'none'; }, 220);
+    }
+    if (enter) enter.addEventListener('click', vanishModal);
+    if (later) later.addEventListener('click', vanishModal);
+    if (closeX) closeX.addEventListener('click', vanishModal);
+    modalDiv.addEventListener('click', (e) => { if(e.target === modalDiv) vanishModal(); });
+  })();
+</script>
+
+<header class="glass-header">
+  <div class="nav-container">
+    <div class="brand">ARTEVA</div>
+    <nav class="nav-links">
+      <a href="#shop">COLLECTION</a>
+      <a href="#shop">EDITORIAL</a>
+      <a href="#shop">ATELIER</a>
+      <a href="#">ARCHIVES</a>
+    </nav>
+    <div class="utility-actions">
+      <button id="themeToggle" aria-label="dark mode toggle">🌙</button>
+      <div class="bag-icon">👜 <span id="cartTotal">0</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero-arteva">
+    <div class="hero-content">
+      <div class="hero-sub">AW26 DEBUT</div>
+      <h1 class="hero-main-title">Earth &<br />Silhouette</h1>
+      <div class="hero-offer">Inaugural Collection — <strong>25% OFF</strong> on first orders</div>
+      <a href="#shop" class="btn-primary">Discover Atelier →</a>
+    </div>
+  </section>
+
+  <div class="collection-badge" id="shop">
+    <h2>Prêt-à-Porter · Vol. IV</h2>
+    <p>12 artisan pieces / limited release</p>
+  </div>
+
+  <div class="grid-shop" id="productGrid"></div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">ARTEVA</div>
+    <div class="footer-locations">FLORENCE — KYOTO — PARIS — MUMBAI</div>
+    <p class="copyright" style="font-size:0.65rem; opacity:0.6;">© 2026 ARTEVA ATELIER. SLOW CRAFT. ALL RIGHTS RESERVED.</p>
+  </div>
+</footer>
+
+<script>
+  // ======================== NEW PRODUCT CATALOG ========================
+  // Completely fresh products, all new images & names, ARTEVA identity
+  const products = [
+    { id: 1, name: "Cocoon Linen Shirt", category: "Shirting", original: 2899, discountPrice: 2174, img: "https://images.unsplash.com/photo-1598032895397-b9472444bf93?q=80&w=2070&auto=format&fit=crop", alt: "linen shirt" },
+    { id: 2, name: "Ash Wool Oversized Blazer", category: "Tailoring", original: 6999, discountPrice: 5249, img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=687&auto=format&fit=crop", alt: "wool blazer" },
+    { id: 3, name: "Petrichor Silk Maxi", category: "Dresses", original: 4999, discountPrice: 3749, img: "https://images.unsplash.com/photo-1742794572842-6836a8d0b11b?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", alt: "silk dress" },
+    { id: 4, name: "Driftwood Wide Trousers", category: "Bottoms", original: 3599, discountPrice: 2699, img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=600&auto=format&fit=crop", alt: "trousers" },
+    { id: 5, name: "Frost Alpaca Sweater", category: "Knitwear", original: 3499, discountPrice: 2624, img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=764&auto=format&fit=crop", alt: "knit sweater" },
+    { id: 6, name: "Monsoon Trench", category: "Outerwear", original: 8499, discountPrice: 6374, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=600&auto=format&fit=crop", alt: "trench coat" },
+    { id: 7, name: "Willow Pleated Skirt", category: "Skirts", original: 2699, discountPrice: 2024, img: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?q=80&w=687&auto=format&fit=crop", alt: "pleated skirt" },
+    { id: 8, name: "Obsidian Leather Rider", category: "Leather", original: 10999, discountPrice: 8249, img: "https://plus.unsplash.com/premium_photo-1661313817350-1fa759c43a3b?q=80&w=1217&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", alt: "leather jacket" },
+    { id: 9, name: "Vine Corset Shell", category: "Topwear", original: 2399, discountPrice: 1799, img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=688&auto=format&fit=crop", alt: "corset top" },
+    { id: 10, name: "Raw Selvedge Denim", category: "Denim", original: 4299, discountPrice: 3224, img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600&auto=format&fit=crop", alt: "denim jeans" },
+    { id: 11, name: "Nocturne Velvet Gown", category: "Evening", original: 14999, discountPrice: 11249, img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=687&auto=format&fit=crop", alt: "velvet gown" },
+    { id: 12, name: "Clay Workwear Vest", category: "Layering", original: 3199, discountPrice: 2399, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=600&auto=format&fit=crop", alt: "utility vest" }
+  ];
+
+  let cart = [];
+
+  function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartSpan = document.getElementById('cartTotal');
+    if (cartSpan) cartSpan.innerText = totalItems;
+  }
+
+  function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    const existing = cart.find(item => item.id === productId);
+    if (existing) existing.quantity += 1;
+    else cart.push({ id: product.id, name: product.name, price: product.discountPrice, quantity: 1, img: product.img });
+    updateCartUI();
+    const btn = document.querySelector(`.add-btn-${productId}`);
+    if (btn) {
+      const originalText = btn.innerText;
+      btn.innerText = "✓ ADDED";
+      setTimeout(() => { btn.innerText = originalText; }, 800);
+    }
+  }
+
+  function renderProducts() {
+    const container = document.getElementById('productGrid');
+    if (!container) return;
+    container.innerHTML = '';
+    products.forEach(prod => {
+      const card = document.createElement('div');
+      card.className = 'product-tile';
+      const discountPercent = Math.round(((prod.original - prod.discountPrice) / prod.original) * 100);
+      card.innerHTML = `
+        <div class="tile-img">
+          <img src="${prod.img}" alt="${prod.alt || prod.name}" loading="lazy">
+          <div class="quick-add">
+            <button class="add-btn-${prod.id} add-to-cart-btn" data-id="${prod.id}">Quick Add</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="product-details">
+            <h4>${prod.category}</h4>
+            <h3>${prod.name}</h3>
+          </div>
+          <div class="price-block">
+            <span class="current-price">₹${prod.discountPrice.toLocaleString('en-IN')}</span>
+            <span class="old-price">₹${prod.original.toLocaleString('en-IN')}</span>
+            <span style="font-size: 0.65rem; color: var(--accent); display: block; text-align: right;">-${discountPercent}%</span>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = parseInt(btn.getAttribute('data-id'));
+        addToCart(id);
+      });
+    });
+  }
+
+  function initTheme() {
+    const stored = localStorage.getItem('arteva-theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = stored || (systemDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    const toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) toggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    const bgRgb = theme === 'dark' ? '18, 16, 14' : '254, 252, 248';
+    document.documentElement.style.setProperty('--bg-rgb', bgRgb);
+  }
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('arteva-theme', next);
+    const toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) toggleBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+    const newBgRgb = next === 'dark' ? '18, 16, 14' : '254, 252, 248';
+    document.documentElement.style.setProperty('--bg-rgb', newBgRgb);
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === "#" || href === "") return;
+      const target = document.querySelector(href);
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  renderProducts();
+  initTheme();
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+  updateCartUI();
+</script>
+</body>
+</html>
